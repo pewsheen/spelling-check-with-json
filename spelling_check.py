@@ -4,7 +4,7 @@ import time
 import enchant
 from enchant.checker import SpellChecker
 from enchant.tokenize import EmailFilter, URLFilter
-from fluentmail import FluentMail
+from fluentmail import *
 
 # Global Settings #
 jsWordPath 		= 'D:\\js.json'
@@ -35,7 +35,8 @@ jsTypo = {}
 '''
 	js.json
 '''
-print '\n------------- mup -------------\n'
+if debugMode:
+	print '\n------------- mup -------------\n'
 input_mup_file  = file(jsWordPath, "r")
 jsWord = json.loads(input_mup_file.read().decode("utf-8"))
 
