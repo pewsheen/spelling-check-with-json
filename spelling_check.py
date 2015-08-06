@@ -66,9 +66,9 @@ def spellingCheck(jsonPath):
 				errList.append(err.word)
 
 			if len(errList) > 0 :
-				inputTypo[text] = {}
-				inputTypo[text]['typo'] = errList
-				inputTypo[text]['key']  = key
+				inputTypo[key] = {}
+				inputTypo[key]['typo'] = errList
+				inputTypo[key]['text']  = text
 	return inputTypo
 
 def createTypoTable(inputTypo, filename):
@@ -82,14 +82,14 @@ def createTypoTable(inputTypo, filename):
 					<th class="tg">String</th>\
 				</tr>';
 
-		for text in inputTypo:
-			resultText = text
-			for typo in inputTypo[text]['typo']:
+		for key in inputTypo:
+			resultText = inputTypo[key]['text']
+			for typo in inputTypo[key]['typo']:
 				resultText = resultText.replace(typo, '<font color="red">'+typo+'</font>')
 			
 			typoTable += '\
 			<tr class="tg">\
-				<td class="tg">'+inputTypo[text]['key']+'</td>\
+				<td class="tg">'+key+'</td>\
 				<td class="tg">'+resultText+'</td>\
 			</tr>'
 
@@ -115,7 +115,11 @@ def runSpellingCheck(pathList):
 
 	checkTime = time.strftime("%Y/%m/%d")
 
-	mailHeader = '<h1>Spelling Check Result '+checkTime+'</h1>\
+	mailHeader = '\
+		<head>\
+			<meta charset="UTF-8">\
+		</head>\
+		<h1>Spelling Check Result '+checkTime+'</h1>\
 		<style type="text/css">\
 			.tg  {border-collapse:collapse;border-spacing:0;}\
 			.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}\
